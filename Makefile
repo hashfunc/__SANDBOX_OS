@@ -16,7 +16,7 @@ out/header.o: bootstrap/header.asm
 	$(NASM) -f elf bootstrap/header.asm -o out/header.o
 
 
-out/bootstrap.o: bootstrap/bootstrap.c
+out/bootstrap.o: bootstrap/bootstrap.h bootstrap/bootstrap.c
 	$(GCC) $(CFLAGS) -c bootstrap/bootstrap.c -o out/bootstrap.o
 
 

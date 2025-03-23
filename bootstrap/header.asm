@@ -11,9 +11,16 @@ SCREEN_H    EQU     0x0FF6
 VRAM        EQU     0x0FF8
 
 
+[SECTION .btext]
+[BITS 16]
+
+
+entry:
 MOV     AL, 0x13
 MOV     AH, 0x00
 INT     0x10
+
+
 MOV     BYTE  [VMODE], 8
 MOV     WORD  [SCREEN_W], 320
 MOV     WORD  [SCREEN_H], 200
@@ -76,21 +83,10 @@ IMUL    ECX, 512*18*2/4
 SUB     ECX, 512/4
 CALL    memcpy
 
-MOV     EBX, BOOTSTRAP
-MOV     ECX, [EBX+16]
-ADD     ECX, 3
-SHR     ECX, 2
-JZ      skip
-
-MOV     ESI, [EBX+20]
-ADD     ESI, EBX
-MOV     EDI, [EBX+12]
-CALL    memcpy
-
 
 skip:
-MOV     ESP, [EBX+12]
-JMP     DWORD 2*8:0x0000001B
+MOV     ESP, 0xFFFF
+JMP     DWORD 2*8:0x00000000
 
 
 wait_keyboard:
